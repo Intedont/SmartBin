@@ -1,0 +1,58 @@
+#:kivy 2.0.0
+
+WindowManager:
+    FirstWindow:
+    SecondWindow:
+
+<FirstWindow>:
+    name: "first"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        padding: 50
+        spacing: 20
+
+        Label:
+            text: 'Поместите мусор в мусороприемник'
+
+        Image:
+            source: 'step1.png'
+        
+        RoundedButton:
+            text: 'Hello!'
+            on_release: 
+                app.root.current = "second"
+                app.sorting()
+
+<SecondWindow>:
+    name: "second"
+    RotationableImage:
+        source: 'step1.png'
+        
+
+<RotationableImage>:
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+        Rectangle:
+            size: 100, 100
+    canvas.after:
+        PopMatrix
+
+
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    background_normal:''
+    canvas.before:
+        Color: 
+            rgba: (48/255, 84/255, 150/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
